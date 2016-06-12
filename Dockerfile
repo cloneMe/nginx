@@ -1,5 +1,24 @@
-FROM nginx
-MAINTAINER Kelvin Chen <kelvin@kelvinchen.org>
+FROM debian:jessie
+MAINTAINER https://github.com/cloneMe, Kelvin Chen <kelvin@kelvinchen.org>
+
+# Install all dependencies that are used in multiple images.
+RUN echo "deb http://httpredir.debian.org/debian jessie non-free" \
+        >> /etc/apt/sources.list \
+    && apt-get update \
+    && apt-get install --no-install-recommends -y \
+        vim \
+        ca-certificates \
+        python \
+        python-dev \
+        curl \
+        git \
+        nginx \
+        unzip \
+        unrar \
+        supervisor \
+        bzip2 \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y apache2-utils \
